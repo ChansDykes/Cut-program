@@ -327,7 +327,7 @@ const CC_EMAIL = 'chans@withtwill.com';
 const VARIANTS = {
   pull_a: { name: 'PULL A', focus: 'Strength', day_type: 'pull', weekday: 1, dayName: 'Monday' },
   pull_b: { name: 'PULL B', focus: 'Volume', day_type: 'pull', weekday: 4, dayName: 'Thursday' },
-  push_a: { name: 'PUSH A', focus: 'Chest Priority', day_type: 'push', weekday: 3, dayName: 'Wednesday' },
+  push_a: { name: 'PUSH A', focus: 'Upper Chest + Shoulder', day_type: 'push', weekday: 3, dayName: 'Wednesday' },
   push_b: { name: 'PUSH B', focus: 'Shoulder Priority', day_type: 'push', weekday: 6, dayName: 'Saturday' },
   push_c: { name: 'PUSH C', focus: 'Volume / Upper', day_type: 'push', weekday: 0, dayName: 'Sunday' },
   legs_a: { name: 'LEGS A', focus: 'Quad Priority', day_type: 'legs', weekday: 2, dayName: 'Tuesday' },
@@ -345,8 +345,9 @@ const HIIT_PROTOCOLS = {
 
 const TEMPLATES = {
   pull_a: [
+    { name: 'Deadlift', sets: 4, reps: 6, suggested: 225 },
     { name: 'Weighted Pull-up', sets: 4, reps: 8, suggested: 0, bw: true },
-    { name: 'Barbell Row', sets: 4, reps: 8, suggested: 180 },
+    { name: 'Barbell Row', sets: 4, reps: 8, suggested: 190 },
     { name: 'Single-arm DB Row', sets: 3, reps: 10, suggested: 90 },
     { name: 'Face Pull', sets: 3, reps: 15, suggested: 80 },
     { name: 'Barbell Curl', sets: 4, reps: 8, suggested: 80 },
@@ -366,15 +367,15 @@ const TEMPLATES = {
   ],
   push_a: [
     { name: 'Bench Press', sets: 4, reps: 8, suggested: 165 },
-    { name: 'Incline Dumbbell Press', sets: 4, reps: 10, suggested: 70 },
-    { name: 'Chest Fly', sets: 3, reps: 10, suggested: 180 },
-    { name: 'Lateral Raise', sets: 4, reps: 15, suggested: 20 },
-    { name: 'Shoulder Press', sets: 3, reps: 10, suggested: 55 },
-    { name: 'Rope Pushdown', sets: 3, reps: 10, suggested: 60 },
-    { name: 'Overhead Tricep Extension', sets: 3, reps: 8, suggested: 40 },
-    { name: 'Cable Crunch', sets: 3, reps: 10, suggested: 100 },
-    { name: 'Hanging Leg Raise', sets: 3, reps: 8, suggested: 0, bw: true },
-    { name: 'Ab Wheel', sets: 3, reps: 8, suggested: 0, bw: true }
+    { name: 'Incline Barbell Press', sets: 4, reps: 8, suggested: 115 },
+    { name: 'Standing Overhead Press', sets: 4, reps: 8, suggested: 85 },
+    { name: 'Cable Crossover', sets: 3, reps: 12, suggested: 55 },
+    { name: 'Cable Lateral Raise', sets: 4, reps: 15, suggested: 22.5 },
+    { name: 'Dips', sets: 3, reps: 8, suggested: 0, bw: true },
+    { name: 'Close-Grip Bench Press', sets: 3, reps: 8, suggested: 135 },
+    { name: 'Decline Bench Sit-Up', sets: 3, reps: 12, suggested: 45 },
+    { name: 'Cable Woodchopper', sets: 3, reps: 12, suggested: 40 },
+    { name: 'Ab Wheel', sets: 3, reps: 10, suggested: 0, bw: true }
   ],
   push_b: [
     { name: 'Overhead Press', sets: 4, reps: 8, suggested: 95 },
@@ -400,8 +401,8 @@ const TEMPLATES = {
     { name: 'Ab Wheel', sets: 3, reps: 8, suggested: 0, bw: true }
   ],
   legs_a: [
-    { name: 'Squat', sets: 4, reps: 8, suggested: 275 },
-    { name: 'Leg Press', sets: 4, reps: 12, suggested: 365 },
+    { name: 'Squat', sets: 4, reps: 8, suggested: 295 },
+    { name: 'Leg Press', sets: 4, reps: 12, suggested: 435 },
     { name: 'Walking Lunges', sets: 3, reps: 12, suggested: 80 },
     { name: 'Leg Extension', sets: 4, reps: 15, suggested: 130 },
     { name: 'Leg Curl', sets: 3, reps: 15, suggested: 135 },
