@@ -445,7 +445,7 @@ function buildHiitTemplate(amDayType) {
 // SEED data: starts user out with their actual logged history
 const SEED = {
   user: { name: 'Chans', height_inches: 73, goal: 'Visible abs, ~12% BF', abs_threshold_waist_in: 33.5, start_date: '2026-05-14', start_weight_lbs: 209 },
-  benchProgram: { currentTargetWeight: 165, currentTargetReps: 8, goalWeight: 185, goalReps: 8 },
+  benchProgram: { currentTargetWeight: 175, currentTargetReps: 8, goalWeight: 185, goalReps: 8 },
   weighIns: [
     { date: '2026-05-14', weight_lbs: 209, neck_in: 14.5, waist_in: 39, hips_in: 39, photos: [] }
   ],
@@ -513,6 +513,29 @@ function loadData() {
   return seeded;
 }
 function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+
+// === COACH UPDATES ===
+// Applied once per id on each page load. When the coach pushes a new tracker after a sync,
+// new entries are prepended here. Once applied, the id is recorded so the update doesn't repeat.
+const COACH_UPDATES = [
+  { id: '2026-05-20-bench-175', apply: () => {
+      data.benchProgram = { currentTargetWeight: 175, currentTargetReps: 8, goalWeight: 185, goalReps: 8 };
+      if (!data.personalRecords) data.personalRecords = {};
+      const bench = data.personalRecords['Bench Press'];
+      if (!bench || bench.weight < 165 || (bench.weight === 165 && (bench.reps || 0) < 10)) {
+        data.personalRecords['Bench Press'] = { weight: 165, reps: 10, date: '2026-05-20' };
+      }
+    }
+  }
+];
+if (!data.appliedCoachUpdates) data.appliedCoachUpdates = [];
+let _coachUpdatesApplied = false;
+COACH_UPDATES.forEach(u => {
+  if (!data.appliedCoachUpdates.includes(u.id)) {
+    try { u.apply(); data.appliedCoachUpdates.push(u.id); _coachUpdatesApplied = true; } catch (e) { console.warn('Coach update failed', u.id, e); }
+  }
+});
+if (_coachUpdatesApplied) saveData();
 
 function navyBF(weight, neck, waist, hips, height) {
   const wn = waist - neck;
