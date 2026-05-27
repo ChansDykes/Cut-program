@@ -402,10 +402,10 @@ const TEMPLATES = {
   ],
   legs_a: [
     { name: 'Squat', sets: 4, reps: 8, suggested: 295 },
-    { name: 'Leg Press', sets: 4, reps: 12, suggested: 435 },
-    { name: 'Walking Lunges', sets: 3, reps: 12, suggested: 80 },
-    { name: 'Leg Extension', sets: 4, reps: 15, suggested: 130 },
-    { name: 'Leg Curl', sets: 3, reps: 15, suggested: 135 },
+    { name: 'Leg Press', sets: 4, reps: 12, suggested: 475 },
+    { name: 'Walking Lunges', sets: 3, reps: 10, suggested: 95 },
+    { name: 'Leg Extension', sets: 4, reps: 15, suggested: 145 },
+    { name: 'Leg Curl', sets: 3, reps: 15, suggested: 160 },
     { name: 'Calf Raise', sets: 4, reps: 20, suggested: 180 },
     { name: 'Hip Abductor', sets: 3, reps: 20, suggested: 160 },
     { name: 'Hanging Leg Raise', sets: 3, reps: 8, suggested: 0, bw: true },
@@ -518,6 +518,29 @@ function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
 // Applied once per id on each page load. When the coach pushes a new tracker after a sync,
 // new entries are prepended here. Once applied, the id is recorded so the update doesn't repeat.
 const COACH_UPDATES = [
+  { id: '2026-05-27-legs-a-overload', apply: () => {
+      // After 5/26 LEGS A: Leg Press 455x12x4 clean → 475. Lunges 90x10 → 95.
+      // Leg Ext 135x15x4 clean → 145. Leg Curl 160x15/15/12 → hold 160 target.
+      // Squat top 295x7 (rep PR vs 295x6) → hold 295x8 target.
+      if (!data.personalRecords) data.personalRecords = {};
+      const squat = data.personalRecords['Squat'];
+      if (!squat || squat.weight < 295 || (squat.weight === 295 && (squat.reps || 0) < 7)) {
+        data.personalRecords['Squat'] = { weight: 295, reps: 7, date: '2026-05-26' };
+      }
+      const legPress = data.personalRecords['Leg Press'];
+      if (!legPress || legPress.weight < 455 || (legPress.weight === 455 && (legPress.reps || 0) < 12)) {
+        data.personalRecords['Leg Press'] = { weight: 455, reps: 12, date: '2026-05-26' };
+      }
+      const lunges = data.personalRecords['Walking Lunges'];
+      if (!lunges || lunges.weight < 90) {
+        data.personalRecords['Walking Lunges'] = { weight: 90, reps: 10, date: '2026-05-26' };
+      }
+      const legCurl = data.personalRecords['Leg Curl'];
+      if (!legCurl || legCurl.weight < 160 || (legCurl.weight === 160 && (legCurl.reps || 0) < 15)) {
+        data.personalRecords['Leg Curl'] = { weight: 160, reps: 15, date: '2026-05-26' };
+      }
+    }
+  },
   { id: '2026-05-20-bench-175', apply: () => {
       data.benchProgram = { currentTargetWeight: 175, currentTargetReps: 8, goalWeight: 185, goalReps: 8 };
       if (!data.personalRecords) data.personalRecords = {};
