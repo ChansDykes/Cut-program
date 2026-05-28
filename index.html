@@ -445,7 +445,7 @@ function buildHiitTemplate(amDayType) {
 // SEED data: starts user out with their actual logged history
 const SEED = {
   user: { name: 'Chans', height_inches: 73, goal: 'Visible abs, ~12% BF', abs_threshold_waist_in: 33.5, start_date: '2026-05-14', start_weight_lbs: 209 },
-  benchProgram: { currentTargetWeight: 175, currentTargetReps: 8, goalWeight: 185, goalReps: 8 },
+  benchProgram: { currentTargetWeight: 185, currentTargetReps: 8, goalWeight: 185, goalReps: 8 },
   weighIns: [
     { date: '2026-05-14', weight_lbs: 209, neck_in: 14.5, waist_in: 39, hips_in: 39, photos: [] }
   ],
@@ -518,6 +518,43 @@ function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
 // Applied once per id on each page load. When the coach pushes a new tracker after a sync,
 // new entries are prepended here. Once applied, the id is recorded so the update doesn't repeat.
 const COACH_UPDATES = [
+  { id: '2026-05-28-pull-a-overload', apply: () => {
+      // 5/28 PULL A: BB Row 205x8 x4 clean → 215. SA DB Row 95x8 x3 → 100.
+      // Face Pull 80x15 x3 → 85. Lat Pulldown top 190x8 → target 200. Deadlift 295 holding → keep 295 target.
+      if (!data.personalRecords) data.personalRecords = {};
+      const row = data.personalRecords['Barbell Row'];
+      if (!row || row.weight < 205 || (row.weight === 205 && (row.reps || 0) < 8)) {
+        data.personalRecords['Barbell Row'] = { weight: 205, reps: 8, date: '2026-05-28' };
+      }
+      const sadbr = data.personalRecords['Single-arm DB Row'];
+      if (!sadbr || sadbr.weight < 95 || (sadbr.weight === 95 && (sadbr.reps || 0) < 8)) {
+        data.personalRecords['Single-arm DB Row'] = { weight: 95, reps: 8, date: '2026-05-28' };
+      }
+      const dl = data.personalRecords['Deadlift'];
+      if (!dl || dl.weight < 295 || (dl.weight === 295 && (dl.reps || 0) < 6)) {
+        data.personalRecords['Deadlift'] = { weight: 295, reps: 6, date: '2026-05-28' };
+      }
+      const lpd = data.personalRecords['Lat Pulldown'];
+      if (!lpd || lpd.weight < 190 || (lpd.weight === 190 && (lpd.reps || 0) < 8)) {
+        data.personalRecords['Lat Pulldown'] = { weight: 190, reps: 8, date: '2026-05-28' };
+      }
+    }
+  },
+  { id: '2026-05-27-bench-185-graduation', apply: () => {
+      // Bench build program: 175x8 x4 all clean on 5/27 → graduate to final 185x8 target.
+      // Also bump Incline Barbell 155 → 165. Cable Crossover 30 → 35. Seated OHP debut at 115x7.
+      data.benchProgram = { currentTargetWeight: 185, currentTargetReps: 8, goalWeight: 185, goalReps: 8 };
+      if (!data.personalRecords) data.personalRecords = {};
+      const bench = data.personalRecords['Bench Press'];
+      if (!bench || bench.weight < 175 || (bench.weight === 175 && (bench.reps || 0) < 8)) {
+        data.personalRecords['Bench Press'] = { weight: 175, reps: 8, date: '2026-05-27' };
+      }
+      const incline = data.personalRecords['Incline Barbell Press'];
+      if (!incline || incline.weight < 155 || (incline.weight === 155 && (incline.reps || 0) < 8)) {
+        data.personalRecords['Incline Barbell Press'] = { weight: 155, reps: 8, date: '2026-05-27' };
+      }
+    }
+  },
   { id: '2026-05-27-legs-a-overload', apply: () => {
       // After 5/26 LEGS A: Leg Press 455x12x4 clean → 475. Lunges 90x10 → 95.
       // Leg Ext 135x15x4 clean → 145. Leg Curl 160x15/15/12 → hold 160 target.
