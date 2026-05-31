@@ -518,6 +518,34 @@ function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
 // Applied once per id on each page load. When the coach pushes a new tracker after a sync,
 // new entries are prepended here. Once applied, the id is recorded so the update doesn't repeat.
 const COACH_UPDATES = [
+  { id: '2026-05-30-pushb-legsb-overload', apply: () => {
+      // 5/29 LEGS B: Hip Abductor 170x20x3 → 175. Hip Thrust 275x10x4 (huge) → 285.
+      // RDL 205x10x4 → 215. Lunges 80x12x3 → 85. Leg Ext 135x15x3 → 145. Calf 230x20x3 → 245.
+      // 5/30 PUSH B: OH Press 105x10x4 → 110. OH Tricep Ext 45x10x4 → 50.
+      // Cable Chest Fly 24x12x4 → 26. New tracked lifts: Reverse Pec Deck 120x15, Dips BWx8, Kettlebell Twist 35x15.
+      if (!data.personalRecords) data.personalRecords = {};
+      const updates = {
+        'Hip Thrust': { weight: 275, reps: 10, date: '2026-05-29' },
+        'Romanian Deadlift': { weight: 205, reps: 10, date: '2026-05-29' },
+        'Hip Abductor': { weight: 170, reps: 20, date: '2026-05-29' },
+        'Calf Raise': { weight: 230, reps: 20, date: '2026-05-29' },
+        'Overhead Press': { weight: 105, reps: 10, date: '2026-05-30' },
+        'Overhead Tricep Extension': { weight: 45, reps: 10, date: '2026-05-30' },
+        'Reverse Pec Deck': { weight: 120, reps: 15, date: '2026-05-30' },
+        'Cable Chest Fly': { weight: 24, reps: 12, date: '2026-05-30' },
+        'Dips': { weight: 'BW', reps: 8, date: '2026-05-30' },
+        'Kettlebell Twist': { weight: 35, reps: 15, date: '2026-05-30' }
+      };
+      for (const [name, pr] of Object.entries(updates)) {
+        const cur = data.personalRecords[name];
+        const curW = (typeof cur?.weight === 'number') ? cur.weight : 0;
+        const newW = (typeof pr.weight === 'number') ? pr.weight : 0;
+        if (!cur || curW < newW || (curW === newW && (cur.reps || 0) < pr.reps)) {
+          data.personalRecords[name] = pr;
+        }
+      }
+    }
+  },
   { id: '2026-05-28-pull-a-overload', apply: () => {
       // 5/28 PULL A: BB Row 205x8 x4 clean → 215. SA DB Row 95x8 x3 → 100.
       // Face Pull 80x15 x3 → 85. Lat Pulldown top 190x8 → target 200. Deadlift 295 holding → keep 295 target.
