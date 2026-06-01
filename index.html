@@ -518,6 +518,40 @@ function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
 // Applied once per id on each page load. When the coach pushes a new tracker after a sync,
 // new entries are prepended here. Once applied, the id is recorded so the update doesn't repeat.
 const COACH_UPDATES = [
+  { id: '2026-06-01-legs-a-overload', apply: () => {
+      // 6/01 LEGS A: Squat 295x8 x4 sets ALL clean (was 295x7 top + 295x6 backdown on 5/26) → bump 305x8.
+      // Leg Press 470x12 x4 clean (prior 5/27 target was 475 → did 470) → bump 485x12.
+      // Walking Lunges 95x10 x3 (matched target) → 100x10.
+      // Leg Extension 140x15 x4 clean (prior target was 145 → did 140) → push 150x15.
+      // Leg Curl 160x15 x3 ALL clean (prior was 160x15/15/12) → bump 170x12.
+      // Calf Raise 180x20 x4 + Hip Abductor 160 = held LEGS A values (separate from LEGS B 230/170 targets).
+      if (!data.personalRecords) data.personalRecords = {};
+      const updates = {
+        'Squat': { weight: 295, reps: 8, date: '2026-06-01' },
+        'Leg Press': { weight: 470, reps: 12, date: '2026-06-01' },
+        'Walking Lunges': { weight: 95, reps: 10, date: '2026-06-01' },
+        'Leg Extension': { weight: 140, reps: 15, date: '2026-06-01' },
+        'Leg Curl': { weight: 160, reps: 15, date: '2026-06-01' }
+      };
+      for (const [name, pr] of Object.entries(updates)) {
+        const cur = data.personalRecords[name];
+        const curW = (typeof cur?.weight === 'number') ? cur.weight : 0;
+        const newW = (typeof pr.weight === 'number') ? pr.weight : 0;
+        if (!cur || curW < newW || (curW === newW && (cur.reps || 0) < pr.reps)) {
+          data.personalRecords[name] = pr;
+        }
+      }
+      if (!data.coachTargets) data.coachTargets = {};
+      data.coachTargets['LEGS A'] = {
+        'Squat': '305x8 (4 working sets)',
+        'Leg Press': '485x12 x4',
+        'Walking Lunges': '100x10 x3',
+        'Leg Extension': '150x15 x4',
+        'Leg Curl': '170x12 x3',
+        note: '6/01 was a clean PR sweep — every quad-priority movement hit target. Push the next notch.'
+      };
+    }
+  },
   { id: '2026-05-30-pushb-legsb-overload', apply: () => {
       // 5/29 LEGS B: Hip Abductor 170x20x3 → 175. Hip Thrust 275x10x4 (huge) → 285.
       // RDL 205x10x4 → 215. Lunges 80x12x3 → 85. Leg Ext 135x15x3 → 145. Calf 230x20x3 → 245.
