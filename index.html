@@ -552,6 +552,26 @@ const COACH_UPDATES = [
       };
     }
   },
+  { id: '2026-06-01-legs-a-rir-recalibration', apply: () => {
+      // User reported 6/01 working sets were 2-3 RIR (could have done 295x10 or 470x14 easily).
+      // Rule: top working set should leave 1-2 RIR. Recalibrating LEGS A targets upward.
+      // Squat: hold 305x8 x4 BUT push reps to 10 if last set feels ≤2 RIR.
+      // Leg Press: 485 → 495x12 x4 (user said ~490 was in range).
+      // Walking Lunges: hold load at 100, push reps 10 → 12.
+      // Leg Curl: hold load at 170, push reps 12 → 15 (crushed 160x15 cleanly).
+      // Push/Pull: NO change — those days are dialed in (deadlift reps dropping, bench just graduated, OHP/row clean PRs).
+      if (!data.coachTargets) data.coachTargets = {};
+      data.coachTargets['LEGS A'] = {
+        'Squat': '305x8 x4 (push to 10 if ≤2 RIR)',
+        'Leg Press': '495x12 x4',
+        'Walking Lunges': '100x12 x3',
+        'Leg Extension': '150x15 x4',
+        'Leg Curl': '170x15 x3',
+        rir_rule: 'Top working set must leave 1-2 RIR (not 3+). Log RIR on top set of every compound — report in workout email or on sync.',
+        note: 'Recalibrated 6/01 evening after user reported 2-3 RIR across the board. Push/Pull targets unchanged.'
+      };
+    }
+  },
   { id: '2026-05-30-pushb-legsb-overload', apply: () => {
       // 5/29 LEGS B: Hip Abductor 170x20x3 → 175. Hip Thrust 275x10x4 (huge) → 285.
       // RDL 205x10x4 → 215. Lunges 80x12x3 → 85. Leg Ext 135x15x3 → 145. Calf 230x20x3 → 245.
