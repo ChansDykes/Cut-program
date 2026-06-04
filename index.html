@@ -330,8 +330,8 @@ const VARIANTS = {
   push_a: { name: 'PUSH A', focus: 'Upper Chest + Shoulder', day_type: 'push', weekday: 3, dayName: 'Wednesday' },
   push_b: { name: 'PUSH B', focus: 'Shoulder Priority', day_type: 'push', weekday: 6, dayName: 'Saturday' },
   push_c: { name: 'PUSH C', focus: 'Volume / Upper', day_type: 'push', weekday: 0, dayName: 'Sunday' },
-  legs_a: { name: 'LEGS A', focus: 'Quad Priority', day_type: 'legs', weekday: 2, dayName: 'Tuesday' },
-  legs_b: { name: 'LEGS B', focus: 'Posterior Chain', day_type: 'legs', weekday: 5, dayName: 'Friday' },
+  legs_a: { name: 'LEGS A', focus: 'Quad + Glute', day_type: 'legs', weekday: 2, dayName: 'Tuesday' },
+  legs_b: { name: 'LEGS B', focus: 'Posterior + Shelf', day_type: 'legs', weekday: 5, dayName: 'Friday' },
   hiit: { name: 'HIIT', focus: 'Fat Loss · PM', day_type: 'hiit', weekday: null, dayName: 'PM / 2nd session' }
 };
 
@@ -379,7 +379,7 @@ const TEMPLATES = {
   ],
   push_b: [
     { name: 'Overhead Press', sets: 4, reps: 8, suggested: 95 },
-    { name: 'Incline Dumbbell Press', sets: 3, reps: 10, suggested: 65 },
+    { name: 'Incline Dumbbell Press', sets: 4, reps: 8, suggested: 70 },
     { name: 'Cable Lateral Raise', sets: 4, reps: 15, suggested: 20 },
     { name: 'Reverse Pec Deck', sets: 3, reps: 15, suggested: 80 },
     { name: 'Bench Press', sets: 3, reps: 10, suggested: 135 },
@@ -401,30 +401,31 @@ const TEMPLATES = {
     { name: 'Ab Wheel', sets: 3, reps: 8, suggested: 0, bw: true }
   ],
   legs_a: [
+    // QUAD + GLUTE. Hip thrust moved to the FRONT so glutes get hit fresh (was glute-starved before).
+    { name: 'Hip Thrust', sets: 4, reps: 10, suggested: 285 },
     { name: 'Squat', sets: 4, reps: 8, suggested: 295 },
-    { name: 'Leg Press', sets: 4, reps: 12, suggested: 475 },
-    { name: 'Walking Lunges', sets: 3, reps: 10, suggested: 95 },
-    { name: 'Leg Extension', sets: 4, reps: 15, suggested: 145 },
+    { name: 'Dumbbell Step-up', sets: 3, reps: 10, suggested: 40 },
+    { name: 'Leg Press', sets: 3, reps: 12, suggested: 475 },
+    { name: 'Leg Extension', sets: 3, reps: 15, suggested: 145 },
     { name: 'Leg Curl', sets: 3, reps: 15, suggested: 160 },
-    { name: 'Calf Raise', sets: 4, reps: 20, suggested: 180 },
     { name: 'Hip Abductor', sets: 3, reps: 20, suggested: 160 },
+    { name: 'Calf Raise', sets: 3, reps: 20, suggested: 180 },
     { name: 'Hanging Leg Raise', sets: 3, reps: 8, suggested: 0, bw: true },
-    { name: 'Cable Crunch', sets: 3, reps: 15, suggested: 90 },
-    { name: 'Plank', sets: 3, reps: 45, suggested: 0, bw: true, time: true }
+    { name: 'Cable Crunch', sets: 3, reps: 15, suggested: 90 }
   ],
   legs_b: [
-    { name: 'Hip Abductor', sets: 3, reps: 20, suggested: 160 },
-    { name: 'Hip Thrust', sets: 4, reps: 12, suggested: 230 },
-    { name: 'Romanian Deadlift', sets: 4, reps: 10, suggested: 170 },
+    // POSTERIOR + GLUTE SHELF. Hip thrust FIRST (you were tapped doing it last). Added kickback for the upper shelf.
+    { name: 'Hip Thrust', sets: 4, reps: 10, suggested: 285 },
+    { name: 'Romanian Deadlift', sets: 4, reps: 10, suggested: 225 },
+    { name: 'Walking Lunges', sets: 3, reps: 10, suggested: 115 },
     { name: 'Squat', sets: 3, reps: 10, suggested: 225 },
-    { name: 'Leg Press', sets: 3, reps: 10, suggested: 405 },
-    { name: 'Lunges', sets: 3, reps: 12, suggested: 80 },
+    { name: 'Hip Abductor', sets: 3, reps: 20, suggested: 160 },
+    { name: 'Cable Glute Kickback', sets: 3, reps: 12, suggested: 25 },
+    { name: 'Leg Press', sets: 3, reps: 10, suggested: 465 },
     { name: 'Leg Curl', sets: 3, reps: 12, suggested: 145 },
-    { name: 'Leg Extension', sets: 3, reps: 15, suggested: 130 },
-    { name: 'Calf Raise', sets: 4, reps: 20, suggested: 180 },
+    { name: 'Calf Raise', sets: 4, reps: 20, suggested: 230 },
     { name: 'Hanging Leg Raise', sets: 3, reps: 8, suggested: 0, bw: true },
-    { name: 'Cable Crunch', sets: 3, reps: 15, suggested: 90 },
-    { name: 'Plank', sets: 3, reps: 45, suggested: 0, bw: true, time: true }
+    { name: 'Cable Crunch', sets: 3, reps: 15, suggested: 90 }
   ]
   // HIIT template is built dynamically — see buildHiitTemplate()
 };
@@ -518,6 +519,25 @@ function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
 // Applied once per id on each page load. When the coach pushes a new tracker after a sync,
 // new entries are prepended here. Once applied, the id is recorded so the update doesn't repeat.
 const COACH_UPDATES = [
+  { id: '2026-06-04-plan-rebuild-glute-chest', apply: () => {
+      // Re-evaluation 6/04: user staying on aggressive cut, prioritizing GLUTES (top shelf) + chest/bench.
+      // Reallocated leg volume toward glutes WITHOUT inflating total sets (recovery matters on a deficit):
+      //  - Hip Thrust now on BOTH Legs A & B (glutes 2x/wk, was 1x), placed FIRST so they hit fresh.
+      //  - Added Dumbbell Step-up (Legs A) — highest GMax activation in EMG reviews.
+      //  - Added Cable Glute Kickback + kept Hip Abductor (Legs A & B) for the upper shelf / glute medius.
+      //  - Push B incline bumped to 4x8 for a 2nd weekly upper-chest dose.
+      if (!data.coachTargets) data.coachTargets = {};
+      data.coachTargets['BENCH (past 185)'] = {
+        rule: 'Once 185x8 x4 is owned, STOP linear +10 jumps. Switch to double progression: hold 185, add reps until all 4 sets hit 8, THEN go 195. Make the last set a 2-3s PAUSED rep set to kill the off-chest sticking point.',
+        note: 'Bench is already trained ~2x/wk (heavy Push A + moderate Push B) — that frequency is correct, no change.'
+      };
+      data.coachTargets['NUTRITION (cut)'] = {
+        protein: 'Raise floor to 210-220g (you are lean + in a deficit + want to grow priorities — old 190g was the bare minimum).',
+        deload: 'Take a deload every 5-6 weeks (cut sets ~40%, hold load) — fatigue is the first thing to crack on a deep deficit.',
+        calories: 'Holding 1,800 kcal aggressive cut per your call. Recalibrate against tomorrow morning weigh-in.'
+      };
+    }
+  },
   { id: '2026-06-03-legs-b-overload', apply: () => {
       // 6/03 LEGS B (posterior): RDL 215x10 x4 ALL clean (hit 215 target) → bump 225x10.
       // Walking Lunges 110x10 x4 = big PR (target was 85; he blew past it) → push 115x10.
