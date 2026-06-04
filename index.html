@@ -220,19 +220,19 @@
     <h3>Pick today's workout</h3>
     <div style="font-size:10px;letter-spacing:1.5px;color:var(--text-faint);margin-bottom:6px;">PULL</div>
     <div class="variant-row" style="grid-template-columns:1fr 1fr;">
-      <div class="variant-pill" data-variant="pull_a"><div class="name">PULL A</div><div class="focus">Strength · Mon</div></div>
-      <div class="variant-pill" data-variant="pull_b"><div class="name">PULL B</div><div class="focus">Volume · Thu</div></div>
+      <div class="variant-pill" data-variant="pull_a"><div class="name">PULL A</div><div class="focus">Strength</div></div>
+      <div class="variant-pill" data-variant="pull_b"><div class="name">PULL B</div><div class="focus">Volume</div></div>
     </div>
     <div style="font-size:10px;letter-spacing:1.5px;color:var(--text-faint);margin:10px 0 6px;">PUSH</div>
     <div class="variant-row" style="grid-template-columns:1fr 1fr 1fr;">
-      <div class="variant-pill" data-variant="push_a"><div class="name">PUSH A</div><div class="focus">Chest · Wed</div></div>
-      <div class="variant-pill" data-variant="push_b"><div class="name">PUSH B</div><div class="focus">Shoulder · Sat</div></div>
-      <div class="variant-pill" data-variant="push_c"><div class="name">PUSH C</div><div class="focus">Pump · Sun</div></div>
+      <div class="variant-pill" data-variant="push_a"><div class="name">PUSH A</div><div class="focus">Chest</div></div>
+      <div class="variant-pill" data-variant="push_b"><div class="name">PUSH B</div><div class="focus">Shoulder</div></div>
+      <div class="variant-pill" data-variant="push_c"><div class="name">PUSH C</div><div class="focus">Pump</div></div>
     </div>
     <div style="font-size:10px;letter-spacing:1.5px;color:var(--text-faint);margin:10px 0 6px;">LEGS</div>
     <div class="variant-row" style="grid-template-columns:1fr 1fr;">
-      <div class="variant-pill" data-variant="legs_a"><div class="name">LEGS A</div><div class="focus">Quad · Tue</div></div>
-      <div class="variant-pill" data-variant="legs_b"><div class="name">LEGS B</div><div class="focus">Posterior · Fri</div></div>
+      <div class="variant-pill" data-variant="legs_a"><div class="name">LEGS A</div><div class="focus">Quad</div></div>
+      <div class="variant-pill" data-variant="legs_b"><div class="name">LEGS B</div><div class="focus">Posterior</div></div>
     </div>
     <div style="font-size:10px;letter-spacing:1.5px;color:var(--text-faint);margin:10px 0 6px;">HIIT — PM / 2ND SESSION</div>
     <div class="variant-row" style="grid-template-columns:1fr;">
@@ -518,6 +518,39 @@ function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
 // Applied once per id on each page load. When the coach pushes a new tracker after a sync,
 // new entries are prepended here. Once applied, the id is recorded so the update doesn't repeat.
 const COACH_UPDATES = [
+  { id: '2026-06-03-legs-b-overload', apply: () => {
+      // 6/03 LEGS B (posterior): RDL 215x10 x4 ALL clean (hit 215 target) → bump 225x10.
+      // Walking Lunges 110x10 x4 = big PR (target was 85; he blew past it) → push 115x10.
+      // Leg Press 450x10 x3 on B-day (prior B 405-430) → 465x10 x3.
+      // Calf Raise 230x20 x4 clean (target was 245; did 230) → push to 245x20.
+      // Hip Thrust 275x10/10/8 — did them LAST while tapped → HOLD 285 target, do them earlier next time.
+      // Squat 295x6 x3 = B-day stimulus, not chasing → keep 295x6 stimulus on B days.
+      if (!data.personalRecords) data.personalRecords = {};
+      const updates = {
+        'Romanian Deadlift': { weight: 215, reps: 10, date: '2026-06-03' },
+        'Walking Lunges': { weight: 110, reps: 10, date: '2026-06-03' },
+        'Lunges': { weight: 110, reps: 10, date: '2026-06-03' }
+      };
+      for (const [name, pr] of Object.entries(updates)) {
+        const cur = data.personalRecords[name];
+        const curW = (typeof cur?.weight === 'number') ? cur.weight : 0;
+        const newW = (typeof pr.weight === 'number') ? pr.weight : 0;
+        if (!cur || curW < newW || (curW === newW && (cur.reps || 0) < pr.reps)) {
+          data.personalRecords[name] = pr;
+        }
+      }
+      if (!data.coachTargets) data.coachTargets = {};
+      data.coachTargets['LEGS B'] = {
+        'Hip Thrust': '285x12 x4 (do these EARLY — you were tapped last time)',
+        'Romanian Deadlift': '225x10 x4',
+        'Squat': '295x6 x3 (stimulus, not chasing)',
+        'Leg Press': '465x10 x3',
+        'Walking Lunges': '115x10 x4',
+        'Calf Raise': '245x20 x4',
+        note: '6/03: RDL + Lunges were clean PRs. Hip thrusts suffered from being done last — reorder so they hit fresh.'
+      };
+    }
+  },
   { id: '2026-06-01-legs-a-overload', apply: () => {
       // 6/01 LEGS A: Squat 295x8 x4 sets ALL clean (was 295x7 top + 295x6 backdown on 5/26) → bump 305x8.
       // Leg Press 470x12 x4 clean (prior 5/27 target was 475 → did 470) → bump 485x12.
@@ -700,9 +733,32 @@ function today() {
 }
 function fmtDate(s) { const d = new Date(s + 'T12:00:00'); return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }); }
 function daysBetween(a, b) { return Math.round((new Date(b) - new Date(a)) / 86400000); }
+// Rotating PPL: the next session is driven by the LAST logged session, not the calendar weekday.
+// Order cycles Push → Pull → Legs → Push. Within a day_type we alternate A/B (least-recently-trained
+// wins). This keeps the rotation self-correcting even when life shifts days around. User can always
+// tap a pill to override.
+const ROTATION = ['push', 'pull', 'legs'];
+function lastMainSession() {
+  return data.sessions
+    .filter(s => s.day_type && s.day_type !== 'hiit')
+    .sort((a,b) => (b.date.localeCompare(a.date)) || ((b.session_time||'').localeCompare(a.session_time||'')))[0] || null;
+}
 function todayVariant() {
-  const wd = new Date().getDay();
-  return Object.entries(VARIANTS).find(([_,v]) => v.weekday === wd)?.[0] || 'pull_a';
+  // If an AM session already exists today, default the PM slot to HIIT (spares worked muscles)
+  if (todayAmSession()) return 'hiit';
+  const last = lastMainSession();
+  if (!last) return 'pull_a';
+  const idx = ROTATION.indexOf(last.day_type);
+  const nextType = idx === -1 ? 'push' : ROTATION[(idx + 1) % ROTATION.length];
+  // Candidate A/B variants of that type, pick the one trained least recently
+  const candidates = Object.keys(VARIANTS).filter(k => VARIANTS[k].day_type === nextType && /_(a|b)$/.test(k));
+  let best = candidates[0], bestDate = '9999-99-99';
+  for (const c of candidates) {
+    const ls = data.sessions.filter(s => s.variant === c).sort((a,b) => b.date.localeCompare(a.date))[0];
+    const d = ls ? ls.date : '0000-00-00';
+    if (d < bestDate) { bestDate = d; best = c; }
+  }
+  return best || 'pull_a';
 }
 function detectAmPm() {
   const h = new Date().getHours();
