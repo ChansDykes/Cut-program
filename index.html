@@ -446,7 +446,7 @@ function buildHiitTemplate(amDayType) {
 // SEED data: starts user out with their actual logged history
 const SEED = {
   user: { name: 'Chans', height_inches: 73, goal: 'Visible abs, ~12% BF', abs_threshold_waist_in: 33.5, start_date: '2026-05-14', start_weight_lbs: 209 },
-  benchProgram: { currentTargetWeight: 185, currentTargetReps: 8, goalWeight: 185, goalReps: 8 },
+  benchProgram: { currentTargetWeight: 195, currentTargetReps: 8, goalWeight: 195, goalReps: 8 },
   weighIns: [
     { date: '2026-05-14', weight_lbs: 209, neck_in: 14.5, waist_in: 39, hips_in: 39, photos: [] }
   ],
@@ -519,6 +519,42 @@ function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
 // Applied once per id on each page load. When the coach pushes a new tracker after a sync,
 // new entries are prepended here. Once applied, the id is recorded so the update doesn't repeat.
 const COACH_UPDATES = [
+  { id: '2026-06-05-push-a-bench-graduation', apply: () => {
+      // 6/05 PUSH A — BENCH GRADUATED: 185x8,8,8,9 ALL clean (all 4 working sets >=8).
+      // Per the 6/04 double-progression rule (hold 185, build all sets to 8, THEN go up),
+      // that condition is now met -> next bench target 195x8, last set a 2-3s PAUSED rep set
+      // to kill the off-chest sticking point. Linear +10 era is over.
+      data.benchProgram = { currentTargetWeight: 195, currentTargetReps: 8, goalWeight: 195, goalReps: 8 };
+      // Incline Barbell 165x8 x4 clean -> 175. Standing OHP 95x10 x4 clean -> 105.
+      // Cable Lateral Raise 25x12-13 x4 clean -> 27.5. Close-Grip Bench 135x11/10/9 (new) -> hold, push reps to 12 across.
+      // Cable Crossover bumped to 25.5 on a DIFFERENT machine than his historical "24" unit — not comparable, hold & note.
+      if (!data.personalRecords) data.personalRecords = {};
+      const updates = {
+        'Bench Press': { weight: 185, reps: 9, date: '2026-06-05' },
+        'Incline Barbell Press': { weight: 165, reps: 8, date: '2026-06-05' },
+        'Standing Overhead Press': { weight: 95, reps: 10, date: '2026-06-05' },
+        'Cable Lateral Raise': { weight: 25, reps: 13, date: '2026-06-05' },
+        'Close-Grip Bench Press': { weight: 135, reps: 11, date: '2026-06-05' }
+      };
+      for (const [name, pr] of Object.entries(updates)) {
+        const cur = data.personalRecords[name];
+        const curW = (typeof cur?.weight === 'number') ? cur.weight : 0;
+        const newW = (typeof pr.weight === 'number') ? pr.weight : 0;
+        if (!cur || curW < newW || (curW === newW && (cur.reps || 0) < pr.reps)) {
+          data.personalRecords[name] = pr;
+        }
+      }
+      if (!data.coachTargets) data.coachTargets = {};
+      data.coachTargets['PUSH A'] = {
+        'Bench Press': '195x8 x4 — last set 2-3s PAUSED reps (off-chest sticking point)',
+        'Incline Barbell Press': '175x8 x4',
+        'Standing Overhead Press': '105x10 x4',
+        'Cable Lateral Raise': '27.5x12 x4',
+        'Close-Grip Bench Press': '135x12 x3 (build reps before loading)',
+        note: '6/05: 185 bench OWNED — build program complete. Energy was empty; first real rest day 6/06. Push A targets stepped up across the board.'
+      };
+    }
+  },
   { id: '2026-06-04-plan-rebuild-glute-chest', apply: () => {
       // Re-evaluation 6/04: user staying on aggressive cut, prioritizing GLUTES (top shelf) + chest/bench.
       // Reallocated leg volume toward glutes WITHOUT inflating total sets (recovery matters on a deficit):
