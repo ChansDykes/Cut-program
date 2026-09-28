@@ -159,11 +159,53 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .sheet h4{font-family:var(--f-disp);font-size:23px;font-weight:800;letter-spacing:.02em;margin-bottom:7px}
 .sheet p{font-size:13.5px;color:var(--dim);line-height:1.6;margin-bottom:15px}
 .sheet .gain{color:var(--hit);font-weight:600}
+
+/* botanical marks — a sprig on every section head, a frond in the wordmark */
+.brand{display:flex;align-items:center;gap:6px}
+.frond{width:19px;height:19px;color:var(--ember);flex:none;margin-bottom:2px}
+.card h3{display:flex;align-items:center}
+.card h3::before{content:"";width:14px;height:14px;margin-right:8px;flex:none;
+  background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 15 C8 10 8.4 6 14 1.8' fill='none' stroke='%23D6AB3C' stroke-width='1.25' stroke-linecap='round'/%3E%3Cg fill='%23D6AB3C'%3E%3Cellipse cx='5.4' cy='11.4' rx='2.4' ry='1' transform='rotate(-28 5.4 11.4)'/%3E%3Cellipse cx='10.7' cy='10.4' rx='2.4' ry='1' transform='rotate(26 10.7 10.4)'/%3E%3Cellipse cx='7.2' cy='7.4' rx='2.1' ry='.9' transform='rotate(-34 7.2 7.4)'/%3E%3Cellipse cx='12.1' cy='6.2' rx='2.1' ry='.9' transform='rotate(20 12.1 6.2)'/%3E%3Cellipse cx='9.6' cy='4' rx='1.7' ry='.75' transform='rotate(-38 9.6 4)'/%3E%3C/g%3E%3C/svg%3E");opacity:.9}
+.prov{display:flex;align-items:center;gap:7px;font-size:10.5px;color:var(--faint);
+  letter-spacing:.03em;padding:2px 2px 18px}
+.prov::before{content:"";width:11px;height:11px;flex:none;
+  background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 15 C8 10 8.4 6 14 1.8' fill='none' stroke='%23D6AB3C' stroke-width='1.25' stroke-linecap='round'/%3E%3Cg fill='%23D6AB3C'%3E%3Cellipse cx='5.4' cy='11.4' rx='2.4' ry='1' transform='rotate(-28 5.4 11.4)'/%3E%3Cellipse cx='10.7' cy='10.4' rx='2.4' ry='1' transform='rotate(26 10.7 10.4)'/%3E%3Cellipse cx='7.2' cy='7.4' rx='2.1' ry='.9' transform='rotate(-34 7.2 7.4)'/%3E%3Cellipse cx='12.1' cy='6.2' rx='2.1' ry='.9' transform='rotate(20 12.1 6.2)'/%3E%3Cellipse cx='9.6' cy='4' rx='1.7' ry='.75' transform='rotate(-38 9.6 4)'/%3E%3C/g%3E%3C/svg%3E");opacity:.55}
+
+/* period window */
+.seg.period{margin-bottom:6px}
+.range{font-size:11px;color:var(--faint);letter-spacing:.03em;margin:0 2px 13px}
+.allt{font-family:var(--f-ui);font-size:8.5px;font-weight:700;letter-spacing:.11em;
+  color:var(--faint);border:1px solid var(--rule);border-radius:4px;padding:2px 6px;margin-left:8px}
+
+/* reading these numbers */
+.card.read ul{margin:0;padding-left:15px;display:flex;flex-direction:column;gap:9px}
+.card.read li{font-size:12.5px;color:var(--dim);line-height:1.55}
+.card.read li::marker{color:var(--ember)}
+.card.read b{color:var(--chalk);font-weight:600}
+
+/* loud failure */
+.card.fail{border-color:rgba(176,85,74,.42);background:linear-gradient(180deg,rgba(176,85,74,.07),var(--plate) 60%)}
+.card.fail h3{color:var(--miss)}
+.card.fail h3::before{display:none}
+.card.fail p{font-size:12.5px;color:var(--dim);line-height:1.55}
+.card.fail p.s{color:var(--faint);font-size:11.5px;margin-top:7px}
+.card.fail .li{border-bottom-color:rgba(176,85,74,.2)}
+.card.fail .li .k{color:var(--miss)}
 </style>
 
 <div class="top"><div class="wrap">
   <div class="bar">
-    <div class="brand">CUT<em>.</em></div>
+    <div class="brand">CUT<svg class="frond" viewBox="0 0 28 28" aria-hidden="true">
+      <path d="M14 26 C14 18 15 10 23.5 3.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      <g fill="currentColor">
+        <ellipse cx="9.6" cy="20.6" rx="3.5" ry="1.5" transform="rotate(-26 9.6 20.6)"/>
+        <ellipse cx="18.4" cy="19.4" rx="3.5" ry="1.5" transform="rotate(26 18.4 19.4)"/>
+        <ellipse cx="11.4" cy="15.4" rx="3.2" ry="1.4" transform="rotate(-31 11.4 15.4)"/>
+        <ellipse cx="19.8" cy="14" rx="3.2" ry="1.4" transform="rotate(21 19.8 14)"/>
+        <ellipse cx="14" cy="10.2" rx="2.8" ry="1.2" transform="rotate(-36 14 10.2)"/>
+        <ellipse cx="21.6" cy="8.6" rx="2.6" ry="1.1" transform="rotate(16 21.6 8.6)"/>
+        <ellipse cx="17.6" cy="5.4" rx="2.2" ry="1" transform="rotate(-32 17.6 5.4)"/>
+      </g></svg></div>
     <div class="sync"><span class="dot off" id="dot"></span><span id="syncTxt">local</span></div>
   </div>
   <div class="tabs" role="tablist">
@@ -227,7 +269,11 @@ const ROT=['pull','legs','push'];
 const LS='cutProgram_v5';
 const BLANK={targets:{},prs:{},sessions:{},weighins:{},active:null,queue:[],
   user:{h:73,start:'2026-05-14',startW:209,goalBF:12,absWaist:33.5}};
-let S=load(), db=null, DIRTY=false;
+/* Every piece of page state is declared HERE, above every call site.
+   On The Twill Desk a `const` declared below its caller threw a temporal-dead-zone
+   error inside draw(), which aborted the script before db connected — saving was
+   silently broken while the page still looked fine. Never again. */
+let S=load(), db, LIFT=null, PERIOD='all', LASTSYNC=null, restEnd=0, restTick=null;
 
 function load(){
   try{const r=localStorage.getItem(LS); if(r) return Object.assign({},BLANK,JSON.parse(r));}catch(e){}
@@ -288,15 +334,18 @@ async function connect(){
     if(tg.exists){ const t=tg.data(); if(t.map){ S.targets=Object.assign({},t.map,S.targets); ch=true; } }
     if(pr.exists){ const p=pr.data(); if(p.map){ S.prs=Object.assign({},p.map,S.prs); ch=true; } }
     save();
-    if(S.active&&S.active.type!=='hiit'&&!S.active.exercises.some(e=>e.sets.some(x=>x.done)))
-      startSession(S.active.variant,S.active.slot);
-    if(ch) renderAll();
+    LASTSYNC=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+    try{
+      if(S.active&&S.active.type!=='hiit'&&!S.active.exercises.some(e=>e.sets.some(x=>x.done)))
+        startSession(S.active.variant,S.active.slot);
+    }catch(e){ console.error(e); }
+    renderAll();
   }catch(e){ setSync('off','offline'); }
   await flush();
   try{
     db.collection('sessions').onSnapshot(s=>{
       let ch=false; s.docs.forEach(d=>{ if(merge(d.id,S.sessions,d.data())) ch=true; });
-      if(ch){ save(); renderAll(); }
+      if(ch){ save(); LASTSYNC=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}); renderAll(); }
     },()=>setSync('off','offline'));
   }catch(e){}
 }
@@ -389,6 +438,10 @@ function renderTrain(){
   const lay=layoff();
   if(lay>21&&!sessionList().some(s=>days(s.date,today())<21)) h+='<div class="note"><b>'+lay+' days since your last logged session.</b> '+
     'Targets below are set at 85% of your June numbers — hit them clean for three sessions before you chase the old bars.</div>';
+  const att=attention();
+  if(att.length) h+='<div class="card fail"><h3>Needs attention</h3><div class="lst">'+
+    att.map(([k,v])=>'<div class="li"><div class="grow"><div class="k">'+k+'</div><div class="s">'+v+'</div></div></div>').join('')+
+    '</div></div>';
 
   if(V.t==='hiit'){
     const am=(S.sessions[today()+'-AM']||{}).type||'none'; const p=HIIT[am]||HIIT.none;
@@ -416,7 +469,7 @@ function renderTrain(){
       pv.sets.map(s=>(s.bw?'BW':s.w)+'×'+s.r).join(', ')+'</div>';
     h+='</div></div>';
   });
-  document.getElementById('p-train').innerHTML=h;
+  document.getElementById('p-train').innerHTML=h+provenance();
   document.getElementById('fin').disabled=done===0;
   document.getElementById('fin').textContent=done===0?'LOG A SET':'FINISH · '+done;
 }
@@ -469,26 +522,77 @@ function renderBody(){
         '<div class="s">'+x.waist+'" waist · '+(b!=null?b+'% bf':'—')+'</div></div>'+
         '<div class="v">'+x.w+'</div></div>';}).join('')+'</div></div>';
   }
-  document.getElementById('p-body').innerHTML=h;
+  document.getElementById('p-body').innerHTML=h+provenance();
 }
 const tile=(l,v,d)=>'<div class="tile"><div class="eyebrow">'+l+'</div><div class="v">'+v+'</div><div class="d">'+d+'</div></div>';
 const fld=(k,l,v)=>'<div class="fld"><label for="in-'+k+'">'+l+'</label><input id="in-'+k+'" type="number" inputmode="decimal" step="0.1" value="'+(v||'')+'"></div>';
 
+/* ---------- the period window: it drives every total on the tab, not just bucketing ---------- */
+const PERIODS={week:'This week',last:'Last week','30d':'30 days',all:'All time'};
+function range(p){
+  const t=today(), now=new Date();
+  const mon=new Date(now); mon.setDate(mon.getDate()-((mon.getDay()+6)%7));
+  if(p==='week') return {from:iso(mon),to:t};
+  if(p==='last'){ const a=new Date(mon),b=new Date(mon);
+    a.setDate(a.getDate()-7); b.setDate(b.getDate()-1); return {from:iso(a),to:iso(b)}; }
+  if(p==='30d'){ const a=new Date(now); a.setDate(a.getDate()-29); return {from:iso(a),to:t}; }
+  const L=sessionList(); return {from:L.length?L[0].date:t,to:t};
+}
+const inRange=(d,R)=>d>=R.from&&d<=R.to;
+
+/* ---------- what is going wrong, said out loud ---------- */
+function attention(){
+  const out=[], L=sessionList(), W=weighList();
+  const gap=L.length?days(L[L.length-1].date,today()):null;
+  /* Dormant = the layoff banner above already says it. Repeating it here, and listing
+     every lift as stale, buries the one thing that is actually actionable. */
+  const dormant=gap===null||gap>21;
+  if(gap===null) out.push(['Nothing logged yet','The program has no sessions on record.']);
+  else if(gap>=4&&!dormant){ const last=L[L.length-1];
+    out.push([gap+' days since a session',
+      'Last was '+(VAR[last.variant]?VAR[last.variant].n:last.type)+' on '+fmt(last.date)+'.']); }
+  const wd=W.length?days(W[W.length-1].date,today()):null;
+  if(wd===null) out.push(['No measurements on record','Body fat and waist cannot be computed.']);
+  else if(wd>=14) out.push([wd+' days since a weigh-in',
+    'Last measured '+fmt(W[W.length-1].date)+'. The body-fat trend is stale.']);
+  if(!dormant){
+    const stale=Object.keys(S.targets).map(n=>{const pv=prevSets(n); return pv?{n,d:days(pv.date,today())}:null;})
+      .filter(x=>x&&x.d>=28).sort((a,b)=>b.d-a.d);
+    if(stale.length) out.push([stale.length+' lift'+(stale.length>1?'s':'')+' untrained for 4+ weeks',
+      stale.slice(0,3).map(x=>esc(x.n)+' ('+x.d+'d)').join(', ')+(stale.length>3?', and '+(stale.length-3)+' more':'')+'.']);
+  }
+  return out;
+}
+const provenance=()=>'<div class="prov">Read from this tracker\'s own database · '+
+  (LASTSYNC?'synced '+LASTSYNC:(db===null?'not synced — this device only':'syncing'))+'</div>';
+
 /* ---------- render: TRENDS ---------- */
-let LIFT=null;
+const volOf=s=>(s.exercises||[]).reduce((n,e)=>n+e.sets.reduce((m,x)=>m+(x.time?0:(x.w||0)*(x.r||0)),0),0);
 function renderTrend(){
-  const L=sessionList();
-  if(!L.length){ document.getElementById('p-trend').innerHTML='<div class="empty">No sessions logged yet.<br>Finish one and the charts fill in.</div>'; return; }
-  const names=[...new Set(L.flatMap(s=>(s.exercises||[]).map(e=>e.name)))]
-    .filter(n=>L.filter(s=>(s.exercises||[]).some(e=>e.name===n&&e.sets.some(x=>!x.bw&&!x.time))).length>1).sort();
+  const ALL=sessionList();
+  const R=range(PERIOD), L=ALL.filter(s=>inRange(s.date,R));
+
+  let h='<div class="seg period">'+Object.keys(PERIODS).map(k=>
+      '<button data-p="'+k+'" class="'+(k===PERIOD?'sel':'')+'">'+PERIODS[k]+'</button>').join('')+'</div>'+
+    '<div class="range">'+fmt(R.from)+' — '+fmt(R.to)+' · '+L.length+' of '+ALL.length+' sessions</div>';
+
+  if(!ALL.length){ document.getElementById('p-trend').innerHTML=h+
+    '<div class="empty">Nothing logged yet.<br>Finish a session and this fills in.</div>'; return; }
+
+  const names=[...new Set(ALL.flatMap(s=>(s.exercises||[]).map(e=>e.name)))]
+    .filter(n=>ALL.filter(s=>(s.exercises||[]).some(e=>e.name===n&&e.sets.some(x=>!x.bw&&!x.time))).length>1).sort();
   if(!LIFT||!names.includes(LIFT)) LIFT=names.includes('Bench Press')?'Bench Press':names[0];
 
-  const wk=weekVolume(L);
-  let h='<div class="tiles">'+
-    tile('Sessions',L.length,'since '+fmt(L[0].date))+
-    tile('This week',wk.now.toLocaleString()+'','lb of volume')+
+  const vol=L.reduce((n,s)=>n+volOf(s),0);
+  const prsIn=Object.entries(S.prs).filter(([,pr])=>inRange(pr.date,R)).length;
+  h+='<div class="tiles">'+
+    tile('Sessions',L.length,PERIODS[PERIOD].toLowerCase())+
+    tile('Volume',Math.round(vol).toLocaleString(),'lb lifted in range')+
+    tile('New bests',prsIn,'PRs set in range')+
+    tile('Per session',L.length?Math.round(vol/L.length).toLocaleString():'—','lb average')+
     '</div>';
 
+  const wk=weekVolume(L);
   if(names.length){
     h+='<div class="card"><h3>Top set — '+esc(LIFT)+'</h3>'+
       '<div class="seg">'+names.map(n=>'<button data-lift="'+esc(n)+'" class="'+(n===LIFT?'sel':'')+'">'+esc(n)+'</button>').join('')+'</div>'+
@@ -497,19 +601,32 @@ function renderTrend(){
   h+='<div class="card"><h3>Weekly volume</h3>'+bars(wk.series)+'</div>';
 
   const prs=Object.entries(S.prs).sort((a,b)=>b[1].w-a[1].w);
-  if(prs.length) h+='<div class="card"><h3>Personal records</h3><div class="lst">'+
+  if(prs.length) h+='<div class="card"><h3>Personal records <span class="allt">all time</span></h3><div class="lst">'+
     prs.map(([n,p])=>'<div class="li"><div class="grow"><div class="k">'+esc(n)+'</div><div class="s">'+fmt(p.date)+'</div></div>'+
     '<div class="v">'+p.w+'<span style="font-size:12px;color:var(--faint);font-family:var(--f-ui)"> ×'+p.r+'</span></div></div>').join('')+'</div></div>';
 
   h+='<div class="card"><h3>Recent sessions</h3><div class="lst">'+
     L.slice(-12).reverse().map(s=>{
-      const sets=(s.exercises||[]).reduce((n,e)=>n+e.sets.length,0);
-      const vol=(s.exercises||[]).reduce((n,e)=>n+e.sets.reduce((m,x)=>m+(x.time?0:(x.w||0)*(x.r||0)),0),0);
+      const sets=(s.exercises||[]).reduce((n,e)=>n+e.sets.length,0), v=volOf(s);
       return '<div class="li"><span class="tag '+s.type+'">'+s.type.toUpperCase()+'</span>'+
       '<div class="grow"><div class="k">'+(VAR[s.variant]?VAR[s.variant].n:s.type)+'</div>'+
       '<div class="s">'+fmt(s.date)+' · '+sets+' sets</div></div>'+
-      '<div class="v">'+(vol?Math.round(vol/1000)+'k':'—')+'</div></div>';
+      '<div class="v">'+(v?Math.round(v/1000)+'k':'—')+'</div></div>';
     }).join('')+'</div></div>';
+
+  h+='<div class="card read"><h3>Reading these numbers</h3><ul>'+
+    '<li><b>The period above drives every total on this tab</b> — sessions, volume, new bests, the '+
+      'top-set chart and the weekly bars. Personal records are the exception: they are all-time by '+
+      'definition, and a range-bound record list would read empty most weeks.</li>'+
+    '<li><b>Volume is weight × reps on logged working sets only.</b> Bodyweight and timed work '+
+      '(pull-ups, dips, planks, every HIIT interval) count as zero, so a hard conditioning week '+
+      'shows as a low bar.</li>'+
+    '<li><b>The page cannot see a session you did not tap in.</b> Training away from the phone is '+
+      'invisible here — a gap on this chart is missing data, not proof of a missed session.</li>'+
+    '<li><b>Distrust the current week\'s bar</b> until the week is over, and treat body fat as '+
+      'a tape-measure estimate — the Navy formula runs ±3 points, so the trend is the signal '+
+      'and any single reading is not.</li>'+
+    '</ul></div>'+provenance();
   document.getElementById('p-trend').innerHTML=h;
 }
 function topSets(L,name){
@@ -526,12 +643,18 @@ function weekVolume(L){
     const k=iso(d);
     by[k]=(by[k]||0)+(s.exercises||[]).reduce((n,e)=>n+e.sets.reduce((m,x)=>m+(x.time?0:(x.w||0)*(x.r||0)),0),0);
   });
-  const ks=Object.keys(by).sort().slice(-10);
+  const ks=Object.keys(by).sort().slice(-12);
   return {series:ks.map(k=>({d:k,v:Math.round(by[k])})),now:Math.round(by[ks[ks.length-1]]||0)};
 }
 
 /* ---------- inline SVG charts (no library) ---------- */
 function frame(w,h){ return {w,h,l:40,r:12,t:12,b:26}; }
+/* the latest reading is a leaf, not a dot — newest growth on the stem */
+function leaf(x,y,col,sc){ sc=sc||1;
+  return '<g transform="translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate(-38) scale('+sc+')">'+
+    '<path d="M-6 0 Q0 -4.4 6 0 Q0 4.4 -6 0 Z" fill="'+col+'"/>'+
+    '<path d="M-4.4 0 H4.6" stroke="#0E1410" stroke-width=".8" opacity=".5" stroke-linecap="round"/></g>';
+}
 function line(pts){
   if(pts.length<2) return '<div class="empty">Needs two sessions of this lift.</div>';
   const F=frame(320,140), iw=F.w-F.l-F.r, ih=F.h-F.t-F.b;
@@ -550,7 +673,8 @@ function line(pts){
     '<stop offset="0" stop-color="#D6AB3C" stop-opacity=".30"/><stop offset="1" stop-color="#D6AB3C" stop-opacity="0"/></linearGradient></defs>'+
     '<path d="'+area+'" fill="url(#lg)"/>'+
     '<path d="'+d+'" fill="none" stroke="#D6AB3C" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'+
-    pts.map((p,i)=>'<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(p.v).toFixed(1)+'" r="'+(i===pts.length-1?3.5:2)+'" fill="'+(i===pts.length-1?'#D6AB3C':'#161E18')+'" stroke="#D6AB3C" stroke-width="1.5"/>').join('')+
+    pts.map((p,i)=>i===pts.length-1?'':'<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(p.v).toFixed(1)+'" r="2" fill="#161E18" stroke="#D6AB3C" stroke-width="1.5"/>').join('')+
+    leaf(X(pts.length-1),Y(lastP.v),'#D6AB3C')+
     '<text x="'+(F.w-F.r)+'" y="'+Math.max(F.t+8,Y(lastP.v)-9).toFixed(1)+'" fill="#D6AB3C" font-size="10" font-weight="700" text-anchor="end" font-family="Archivo,sans-serif">'+lastP.lab+'</text>'+
     '<text x="'+F.l+'" y="'+(F.h-8)+'" fill="#717D6C" font-size="9" font-family="Archivo,sans-serif">'+fmt(pts[0].d)+'</text>'+
     '<text x="'+(F.w-F.r)+'" y="'+(F.h-8)+'" fill="#717D6C" font-size="9" text-anchor="end" font-family="Archivo,sans-serif">'+fmt(lastP.d)+'</text></svg>';
@@ -583,15 +707,15 @@ function bars(pts){
   return '<svg class="chart" viewBox="0 0 '+F.w+' '+F.h+'" role="img" aria-label="Weekly training volume">'+
     '<line x1="'+F.l+'" y1="'+(F.t+ih)+'" x2="'+(F.w-F.r)+'" y2="'+(F.t+ih)+'" stroke="#2A382E"/>'+
     '<text x="'+(F.l-7)+'" y="'+(F.t+9)+'" fill="#717D6C" font-size="9" text-anchor="end" font-family="Archivo,sans-serif">'+Math.round(hi/1000)+'k</text>'+
-    pts.map((p,i)=>{const x=F.l+i*(bw+gap), h=Math.max(2,ih*p.v/hi), y=F.t+ih-h;
+    pts.map((p,i)=>{const x=F.l+i*(bw+gap), h=Math.max(2,ih*p.v/hi), y=F.t+ih-h, last=i===pts.length-1;
       return '<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+h.toFixed(1)+
-        '" rx="3" fill="'+(i===pts.length-1?'#D6AB3C':'#3B4D40')+'"/>';}).join('')+
+        '" rx="'+(bw/2.2).toFixed(1)+'" fill="'+(last?'#D6AB3C':'#3B4D40')+'"/>'+
+        (last&&y>F.t+7?leaf(x+bw/2,y-5,'#84B26A',.72):'');}).join('')+
     '<text x="'+F.l+'" y="'+(F.h-8)+'" fill="#717D6C" font-size="9" font-family="Archivo,sans-serif">'+fmt(pts[0].d)+'</text>'+
     '<text x="'+(F.w-F.r)+'" y="'+(F.h-8)+'" fill="#717D6C" font-size="9" text-anchor="end" font-family="Archivo,sans-serif">this week</text></svg>';
 }
 
 /* ---------- rest timer ---------- */
-let restEnd=0, restTick=null;
 function startRest(sec){
   restEnd=Date.now()+sec*1000;
   if(!restTick) restTick=setInterval(paintRest,250);
@@ -650,7 +774,17 @@ function toast(t){ const e=document.getElementById('toast'); e.textContent=t; e.
   clearTimeout(e._t); e._t=setTimeout(()=>e.classList.remove('on'),2200); }
 function sheet(t,p){ document.getElementById('shT').textContent=t;
   document.getElementById('shP').innerHTML=p; document.getElementById('sheet').classList.add('on'); }
-function renderAll(){ renderTrain(); renderBody(); renderTrend(); }
+function renderAll(){
+  [['p-train',renderTrain],['p-body',renderBody],['p-trend',renderTrend]].forEach(([id,fn])=>{
+    try{ fn(); }catch(e){
+      console.error(id,e);
+      const el=document.getElementById(id);
+      if(el) el.innerHTML='<div class="card fail"><h3>This tab failed to draw</h3><p>'+
+        esc((e&&e.message)||String(e))+'</p><p class="s">Nothing you logged is lost — it lives in the '+
+        'database, not on this screen. The other tabs still work.</p></div>';
+    }
+  });
+}
 
 /* ---------- events ---------- */
 document.addEventListener('click',ev=>{
@@ -686,6 +820,7 @@ document.addEventListener('click',ev=>{
   if(t.id==='rest'){ restEnd=0; clearInterval(restTick); restTick=null; paintRest(); return; }
   if(t.id==='shOk'){ document.getElementById('sheet').classList.remove('on'); return; }
   if(t.dataset.lift){ LIFT=t.dataset.lift; renderTrend(); return; }
+  if(t.dataset.p){ PERIOD=t.dataset.p; renderTrend(); window.scrollTo({top:0,behavior:'instant'}); return; }
 
   if(t.id==='saveWeigh'){
     const g=k=>parseFloat(document.getElementById('in-'+k).value);
@@ -708,8 +843,10 @@ document.getElementById('sheet').addEventListener('click',e=>{
   if(e.target.id==='sheet') e.currentTarget.classList.remove('on');
 });
 
-/* ---------- boot ---------- */
-renderAll();
-paintRest();
+/* ---------- boot ----------
+   connect() goes FIRST and is never gated on a successful render: the database
+   connection must survive any drawing error, not the other way round. */
 connect();
+renderAll();
+try{ paintRest(); }catch(e){ console.error(e); }
 </script>
